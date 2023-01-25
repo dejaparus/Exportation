@@ -1,7 +1,116 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{Create HTML output using GitHub Actions}
+
+\usepackage[english,french]{babel}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage[fleqn]{amsmath}
+\usepackage{epsfig}
+\usepackage[normalem]{ulem}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{url} % pour ins\'erer des url
+\usepackage{color}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{amsmath,amsfonts,times,latexsym,comment,times}
+\usepackage{color,epsfig,rotating}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\bce}{\begin{center}}
+\newcommand{\ece}{\end{center}}
+%\usepackage{mprocl}
+
+
+\def\bx{\mathbf{x}}
+\def\by{\mathbf{y}}
+\def\bz{\mathbf{z}}
+\def\bp{\mathbf{p}}
+\newcommand{\MRTF}{\mbox{MRTF}}
+\newcommand{\mttf}{\mbox{mttf}}
+\newcommand{\mode}{\mbox{md}}
+\newcommand{\sS}{\mbox{S}}
+\newcommand{\LL}{\ell}
+\newcommand{\DAC}{\mbox{DAC}}
+\newcommand{\D}{\mbox{D}}
+\newcommand{\R}{I\!\!R}
+\newcommand{\N}{I\!\!N}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\I}{\mathds{1}}
+\newcommand{\C}{C}
+\newcommand{\Pp}{\mathbbm{P}}
+\newcommand{\E}{\mbox{E}}
+\newcommand{\V}{\mbox{Var}}
+\newcommand{\Var}{\mbox{Var}}
+\newcommand{\Cov}{\mbox{Cov}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\Med}{\mbox{Med}}
+\newcommand{\Mod}{\mbox{Mod}}
+\newcommand{\Md}{\mbox{M}_d}
+\newcommand{\Card}{\mbox{Card}}
+\newcommand{\DIP}{\mbox{Dip}}
+\newcommand{\Supp}{\mbox{Supp}}
+
+\def\GEV{{\cal{GEV}}} % raccourci pour la d\'enomination de la loi GEV
+\def\GPD{{\cal{GPD}}} % raccourci pour la d\'enomination de la loi GPD
+\def\EXPO{{\cal{E}}} % raccourci pour la d\'enomination de la loi exponentielle
+\def\GAUSS{{\cal{N}}} % raccourci pour la d\'enomination de la loi gaussienne
+\def\GEV{{\cal{GEV}}} % raccourci pour la d\'enomination de la loi GEV
+\def\BERN{{\cal{B}}_e} % raccourci pour la d\'enomination de la loi de Bernoulli
+\def\BINOM{{\cal{B}}} % raccourci pour la d\'enomination de la loi binomiale
+\def\POIS{{\cal{P}}} % raccourci pour la d\'enomination de la loi de Poisson
+
+
+\def\iid{\textit{iid} } % raccourci pour le terme "i.i.d."
+\def\va{\textit{va} } % raccourci pour le terme "variable al\'eatoire"
+\def\EMV{$\text{EMV}$} % raccourci pour le terme "estimateur du maximum de vraisemblance"
+\def\EMC{$\text{EMC}$} % raccourci pour le terme "estimateur des moindres carr\'es"
+\def\MSY{\mbox{MSY}} 
+\def\msy{\mbox{\small{MSY}}}
+
+\newcommand{\U}{\mathbbm{U}}
+%\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Ss}{\Gamma}
+\newcommand{\RCI}{\mbox{RCI}}
+\newcommand{\LCI}{\Upsilon}
+\newcommand{\LIC}{\Upsilon}
+\newcommand{\tenacite}{K_{IC}}
+
+\newcounter{cptpropo}[part]
+\newenvironment{propo}[0]
+{\noindent\textsc{Proposition}\,\refstepcounter{cptpropo}\thecptpropo.\it}
+
+\newcounter{cptlemmo}[part]
+\newenvironment{lemmo}[0]
+{\noindent\textsc{Lemma}\,\refstepcounter{cptlemmo}\thecptlemmo.\it}
+
+\newcounter{cptexo}[part]
+\newenvironment{exo}[0]
+{\noindent\textsc{Example}\,\refstepcounter{cptexo}\thecptexo.\it}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+%\newtheorem{proof}{Proof}
+%\renewcommand{\theproof}{\empty{}} 
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{assumption}{\noindent Assumption}
+\newtheorem{acknowledgments}{\noindent Acknowledgments}
+\newtheorem{example}{\noindent Example}
+\newtheorem{remark}{\noindent Remark}
+
+
+\title{Projet de recherche : calibration bay\'esienne par divergence KL discr\`ete et distance de Wasserstein}
+\date{M2 2023}
+
+
+
+
+
+%\title{Create HTML output using GitHub Actions}
 \author{Michal Hoftich}
 \date{January 2020, updated June 2021}
 \usepackage{hyperref}
@@ -15,6 +124,16 @@
 \begin{document}
 
 \maketitle
+
+Il est classique de consid\'erer que ces grandeurs ont le sens de quantiles d'une loi pr\'edictive {\it a priori} sur une grandeur $X$ dont on cherche \`a inf\'erer, en pr\'esence de donn\'ees $x_1,\ldots,x_n$, la loi {\it a posteriori}. En introduisant un vecteur de param\`etre $\theta$, de loi {\it a priori} $\pi(\theta)$, la loi {\it a priori} pr\'edictive est
+$$
+f(x)=\int f(x|\theta) \pi(\theta) d \theta
+$$
+et la loi {\it a posteriori} pr\'edictive est
+$$
+f(x|x_1,\ldots,x_n)=\int f(x|\theta) \pi(\theta|x_1,\ldots,x_n) d \theta.
+$$
+
 
 \section{Introduction}
 
