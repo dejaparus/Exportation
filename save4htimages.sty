@@ -1,0 +1,14 @@
+\AtBeginDocument{%
+  % Configure Picture commands to output it's contents on a new page
+  \Configure{Picture+}{\newpage}{\newpage}
+  \Configure{Picture*}{\newpage}{\newpage}
+  % install Lua callbacks to remove tex4ht specials
+  \directlua{
+    local t4htcallback = require "fontspec4ht-images"
+    luatexbase.add_to_callback("pre_linebreak_filter", t4htcallback.process, "remove tex4ht specials")
+    luatexbase.add_to_callback("hpack_filter", t4htcallback.process, "remove tex4ht specials")
+    luatexbase.add_to_callback("vpack_filter", t4htcallback.process, "remove tex4ht specials")
+    % this callback will save the image pages
+    luatexbase.add_to_callback("finish_pdffile", t4htcallback.save_pages, "save image pages")
+  }
+}
