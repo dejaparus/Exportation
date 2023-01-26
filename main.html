@@ -22,6 +22,11 @@ Wasserstein</h2>
 <div class='author'><span class='ptmr7t-x-x-120'>Michal Hoftich</span></div><br />
 <div class='date'><span class='ptmr7t-x-x-120'>January 2020, updated June 2021</span></div>
    </div>
+<!-- l. 91 --><p class='indent'>   Il est classique de considérer que ces grandeurs ont le sens de quantiles d’une loi
+prédictive <span class='ptmri7t-'>a priori </span>sur une grandeur <span class='cmmi-10'>X </span>dont on cherche à inférer, en présence de
+données <span class='cmmi-10'>x</span><sub><span class='cmr-7'>1</span></sub><span class='cmmi-10'>,…,x</span><sub><span class='cmmi-7'>n</span></sub>, la loi <span class='ptmri7t-'>a posteriori</span>. En introduisant un vecteur de paramètre <span class='cmmi-10'>𝜃</span>, de loi <span class='ptmri7t-'>a
+</span><span class='ptmri7t-'>priori </span><span class='cmmi-10'>π</span><span class='cmr-10'>(</span><span class='cmmi-10'>𝜃</span><span class='cmr-10'>)</span>, la loi <span class='ptmri7t-'>a priori </span>prédictive est
+</p>
    <h3 class='sectionHead' id='introduction'><span class='titlemark'>1    </span> <a id='x1-10001'></a>Introduction</h3>
 <!-- l. 103 --><p class='noindent'><a href='https://www.overleaf.com/'>Overleaf</a> is popular online LaTeX editor. It can generate PDF files without need to
 install a local TeX distribution. Unfortunatelly, it doesn’t support conversion to
@@ -42,12 +47,12 @@ HTML file is not easilly accessible.
 </p><!-- l. 126 --><p class='indent'>   To make the conversion easier, I’ve set up <a href='https://hub.docker.com/repository/docker/michalh21/make4ht-docker/general'>Docker image</a> for TeX4ht. Thanks to <a href='https://help.github.com/en/actions/automating-your-workflow-with-github-actions/about-github-actions'>GitHub
 Actions</a>, it is possible to use this image for the conversion of the Overleaf document to
 HTML. The generated files can be published on the web using Github Pages, where they can
-be automatically updated on every document change. This document is an example of this
-setup.
-</p><!-- l. 132 --><p class='noindent'>
                                                                   
 
                                                                   
+be automatically updated on every document change. This document is an example of this
+setup.
+</p><!-- l. 132 --><p class='noindent'>
 </p>
    <h3 class='sectionHead' id='setup'><span class='titlemark'>2    </span> <a id='x1-20002'></a>Setup</h3>
 <!-- l. 134 --><p class='noindent'>
@@ -94,13 +99,13 @@ from the <span class='pcrr7t-'>main.tex </span>input file. The <span class='pcrr
 files. This directory will be used for the web publishing and should be passed to the
 <span class='obeylines-h'><span class='verb'><span class='pcrr7t-'>publish_dir</span></span></span> key in <span class='ptmri7t-'>Publish the web pages </span>step.
 </p><!-- l. 188 --><p class='indent'>   The web will be published at    <a class='url' href='https://yourgitubusename.github.io/project_name/main.html'><span class='pcrr7t-'>https://yourgitubusename.github.io/project_name/main.html</span></a>.
+                                                                  
+
+                                                                  
 </p>
    <h3 class='sectionHead' id='links'><span class='titlemark'>3    </span> <a id='x1-50003'></a>Links</h3>
      <ul class='itemize1'>
      <li class='itemize'>This document:    <a class='url' href='https://www.kodymirus.cz/overleaf-html-sample/main.html'><span class='pcrr7t-'>https://www.kodymirus.cz/overleaf-html-sample/main.html</span></a>
-                                                                  
-
-                                                                  
      </li>
      <li class='itemize'>Source                                                                                                    repository:
      <a class='url' href='https://github.com/michal-h21/overleaf-html-sample'><span class='pcrr7t-'>https://github.com/michal-h21/overleaf-html-sample</span></a></li></ul>

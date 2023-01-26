@@ -1,5 +1,8 @@
  
 /* start css.sty */
+.cmr-7{font-size:70%;}
+.cmmi-7{font-size:70%;font-style: italic;}
+.cmmi-10{font-style: italic;}
 .ptmr7t-{font-family: monospace,monospace;}
 .ptmr7t-{font-family: monospace,monospace;}
 .ptmr7t-{font-family: monospace,monospace;}
@@ -9,9 +12,9 @@
 .ptmr7t-x-x-120{font-size:120%;font-family: monospace,monospace;}
 .ptmr7t-x-x-120{font-family: monospace,monospace;}
 .ptmr7t-x-x-120{font-family: monospace,monospace;}
+.ptmri7t-{font-style: italic;}
 .pcrr7t-{ font-family: 'Nimbus Mono L', serif;}
 .pcrr8c-{ font-family: 'Nimbus Mono L', serif;}
-.ptmri7t-{font-style: italic;}
 p{margin-top:0;margin-bottom:0}
 p.indent{text-indent:0;}
 p + p{margin-top:1em;}
