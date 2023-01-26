@@ -1,0 +1,33 @@
+local pdftoimg4ht = require "pdftoimg4ht"
+local function write_empty_file(filename)
+  local f = io.open(filename, "w")
+  f:write("")
+  f:close()
+end
+
+Make:add("pdftoimg", pdftoimg4ht.run)
+Make:add("fakefontspec", function()
+  -- block execution of these files
+  write_empty_file("fontspec.4ht")
+  write_empty_file("polyglossia.4ht")
+  write_empty_file("usepackage-fontspec.4ht")
+end)
+
+
+set_settings {t4ht_par = "-p"}
+Make:add("removefontspec", function()
+  os.remove("fontspec.4ht")
+  os.remove("usepackage-fontspec.4ht")
+  os.remove("polyglossia.4ht")
+end)
+
+if mode=="images" then
+  -- disable the default tex4ht support for fontspec
+  Make:fakefontspec {}
+  -- to suppress compilation error
+  settings_add{ tex4ht_sty_par =  ",new-accents" }
+  Make:htlatex {htlatex="lualatex", packages= "\\usepackage{save4htimages}"  }
+  Make:pdftoimg {}
+  -- disable the image conversion from t4ht
+  Make:removefontspec {}
+end
