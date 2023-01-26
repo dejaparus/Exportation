@@ -11,7 +11,7 @@ jobs:
       # uses: michal-h21/make4ht-action@master
       uses: docker://ghcr.io/michal-h21/make4ht-action:latest
       env:
-        command: 'make4ht -e sample.mk4 -ulnm images out main.tex "pic-tabular"'
+        command: 'make4ht -e -c config.cfg -ua debug -d out main.tex "pic-tabular" "fn-in"'
     - name: Publish the web pages
       uses:  peaceiris/actions-gh-pages@v3
       with:
