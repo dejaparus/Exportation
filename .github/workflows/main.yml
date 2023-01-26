@@ -12,9 +12,6 @@ jobs:
       uses: docker://ghcr.io/michal-h21/make4ht-action:latest
       env:
         command: 'make4ht -e sample.mk4 -ulnm images out main.tex "pic-tabular"'
-    - name: Run make4ht 2
-      env:
-        command: 'make4ht -e sample.mk4 -ula denug -d out main.tex "fn-in" "pic-tabular"'
     - name: Publish the web pages
       uses:  peaceiris/actions-gh-pages@v3
       with:
