@@ -1,0 +1,109 @@
+kpse.set_program_name "luatex"
+local mkutils = require "mkutils"
+
+local M = {}
+local ghostscript = "gs"
+-- output file resolution
+local r = 72 * 4 
+-- downscalling
+local DownScaleFactor = 2 
+local function get_bboxes(pdfname)
+  -- the bounding box info is written to stderr, so we must redirect it to a temp file
+  local tmpfile = pdfname .. "-tmp"
+  local cmd = string.format("%s -q -sDEVICE=bbox -dNOPAUSE -dBATCH %s 2> %s", ghostscript, pdfname, tmpfile)
+  print(cmd)
+  local bboxes = {}
+  os.execute(cmd)
+  local executed = io.open(tmpfile, "r")
+  local output = executed:read("*all")
+  executed:close()
+  os.remove(tmpfile)
+  local page = 1
+  -- find bounding boxes in the tmp file
+  for x, y, x1, y1 in output:gmatch("%BoundingBox:%s*(%d+)%s*(%d+)%s*(%d+)%s(%d+)") do
+    print(page, x,y,x1, y1)
+    bboxes[page] = {x,y, x1, y1}
+    page = page + 1
+  end
+  return bboxes
+end
+
+local function scale_point(point)
+  return math.ceil(point * (r/72))
+end
+-- calculate dimensions for PDF cropping from the page bounding box
+local function get_gs_dimension(x,y, x1, y1)
+  local width = x1 - x
+  local height = y1 - y
+  return x, y, width, height
+end
+
+local function get_page_dimensions(bboxes, page)
+  local bbox = bboxes[page] or {}
+  return get_gs_dimension(bbox[1], bbox[2], bbox[3], bbox[4])
+end
+
+local function get_gs_page_options(bboxes, page)
+  local x, y, width, height = get_page_dimensions(bboxes, page)
+  print(x, y, width, height)
+  return string.format('-r%d -dDownScaleFactor=%d -g%dx%d -c "<</Install {-%d -%d translate}>> setpagedevice" -dFirstPage=%d -dLastPage=%d', r, DownScaleFactor, scale_point(width)+1, scale_point(height)+1, x, y, page, page)
+end
+
+local function convert_png(filename, outputfile, bboxes, page)
+  local options = get_gs_page_options(bboxes, page)
+  local cmd = string.format("%s -q -sDEVICE=pngalpha -o %s %s %s", ghostscript, outputfile, options, filename)
+  print(cmd)
+  os.execute(cmd)
+end
+
+local function convert_svg(filename, outputfile, bboxes, page)
+  local tmpname = os.tmpname() .. ".pdf"
+  local options = get_gs_page_options(bboxes, page)
+  local cmd = string.format("%s -q -sDEVICE=pdfwrite -o %s %s %s", ghostscript, tmpname, options, filename)
+  print(cmd)
+  os.execute(cmd)
+  local pdf2svg = string.format("pdf2svg %s %s", tmpname, outputfile)
+  print(pdf2svg)
+  os.execute(pdf2svg)
+  os.remove(tmpname)
+end
+
+local function convert_pagelist(filename, pagelist)
+  local bboxes = get_bboxes(filename)
+  for page, outputfile in pairs(pagelist) do
+    if outputfile:match("png$") then
+      convert_png(filename, outputfile, bboxes, page)
+    elseif outputfile:match("svg$") then
+      convert_svg(filename, outputfile, bboxes, page)
+    else 
+      print("unsupported output file format: ".. outputfile)
+    end
+  end
+end
+
+local function run(par)
+  -- get options from the extension settings
+  local ext_options = mkutils.get_filter_settings "pdftoimg4ht" or {}
+  ghostscript = par.ghostscript or ext_options.ghostscript or ghostscript
+  r = par.r or ext_options.r or r
+  DownScaleFactor = par.DownScaleFactor or ext_options.DownScaleFactor or DownScaleFactor
+  local pdffile = par.input .. ".pdf"
+  local pagelist_file = par.pagelist_file or ext_options.pagelist_file or par.input .. "-pagelist.lua"
+  local pagelist = require(pagelist_file)
+  -- print(r, DownScaleFactor, pdffile, pagelist_file)
+  convert_pagelist(pdffile, pagelist)
+end
+
+
+
+
+M.run = run
+M.get_bboxes = get_bboxes
+M.convert_png = convert_png
+M.convert_svg = convert_svg
+M.convert_pagelist = convert_pagelist
+
+-- local pagelist = require "sample-pagelist"
+-- convert_pagelist("sample.pdf", pagelist)
+
+return M
