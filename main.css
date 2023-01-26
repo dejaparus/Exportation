@@ -168,5 +168,8 @@ body{font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Luc
 .footnotes p + p{margin-top:0.3rem;line-height:1.5;margin-left:1rem;text-indent:-1rem;}
 p.indent{text-indent:0pt;}
 p{line-height:1.4;}
+#TBL-2-1{border-left: 1px solid black;}
+#TBL-2-1{border-right:1px solid black;}
+#TBL-2-2{border-right:1px solid black;}
 /* end css.sty */
 
