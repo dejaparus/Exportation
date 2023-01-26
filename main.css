@@ -1,10 +1,17 @@
  
 /* start css.sty */
-.cmr-17{font-size:170%;}
-.cmr-12{font-size:120%;}
-.cmtt-10{font-family: monospace,monospace;}
-.tctt-1000{font-family: monospace,monospace;}
-.cmti-10{ font-style: italic;}
+.ptmr7t-{font-family: monospace,monospace;}
+.ptmr7t-{font-family: monospace,monospace;}
+.ptmr7t-{font-family: monospace,monospace;}
+.ptmr7t-x-x-172{font-size:172%;font-family: monospace,monospace;}
+.ptmr7t-x-x-172{font-family: monospace,monospace;}
+.ptmr7t-x-x-172{font-family: monospace,monospace;}
+.ptmr7t-x-x-120{font-size:120%;font-family: monospace,monospace;}
+.ptmr7t-x-x-120{font-family: monospace,monospace;}
+.ptmr7t-x-x-120{font-family: monospace,monospace;}
+.pcrr7t-{ font-family: 'Nimbus Mono L', serif;}
+.pcrr8c-{ font-family: 'Nimbus Mono L', serif;}
+.ptmri7t-{font-style: italic;}
 p{margin-top:0;margin-bottom:0}
 p.indent{text-indent:0;}
 p + p{margin-top:1em;}
@@ -124,6 +131,28 @@ figcaption.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-al
 figcaption.caption span.id{font-weight: bold; white-space: nowrap; }
 p + figcaption, img + figcaption{margin-top: 1em;}
 .abstract{margin:1em;}
+.equation td{text-align:center; }
+.equation-star td{text-align:center; }
+table.equation-star { width:100%; }
+table.equation { width:100%; }
+table.align, table.alignat, table.xalignat, table.xxalignat, table.flalign {width:95%; margin-left:5%; white-space: nowrap;}
+table.align-star, table.alignat-star, table.xalignat-star, table.flalign-star {margin-left:auto; margin-right:auto; white-space: nowrap;}
+td.align-label { width:5%; text-align:center; }
+td.align-odd { text-align:right; padding-right:0.3em;}
+td.align-even { text-align:left; padding-right:0.6em;}
+table.multline, table.multline-star {width:100%;}
+td.gather {text-align:center; }
+table.gather {width:100%;}
+div.gather-star {text-align:center;}
+.rotatebox{display: inline-block;}
+.uline,.uline-math{ text-decoration:underline; }
+.uuline,.uuline-math{ text-decoration:underline double; }
+span.sout, .sout-math {text-decoration: line-through }
+span.xout, .xout-math {text-decoration: line-through underline }
+span.uwave, .uwave-math {text-decoration:underline wavy; }
+span.dashuline, .dashuline-math {text-decoration:underline dashed;}
+span.dotuline, .dotuline-math {text-decoration:underline dotted;}
+div.verbatiminput {font-family: monospace,monospace; white-space: nowrap; }
 code.lstinline{font-family:monospace,monospace;}
 pre.listings{font-family: monospace,monospace; white-space: pre-wrap; margin-top:0.5em; margin-bottom:0.5em; }
 .lstlisting .label{margin-right:0.5em; }
