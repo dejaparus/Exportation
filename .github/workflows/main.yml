@@ -22,6 +22,6 @@ jobs:
            --bibliography=BIBLIOGRAPHY/biblio.bib
            -t --output=OUTPUT_HTML_DIR ${{ steps.files_list.outputs.files }}
     - uses: actions/upload-artifact@master
-        with:
-          name: OUTPUT_HTML_DIR
-          path: OUTPUT_HTML_DIR
+      with:
+        name: OUTPUT_HTML_DIR
+        path: OUTPUT_HTML_DIR
