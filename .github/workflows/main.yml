@@ -20,8 +20,7 @@ jobs:
            -f latex 
            -s --csl 
            --bibliography=BIBLIOGRAPHY/biblio.bib
-           -t chunkedhtml
-           --output=output/ ${{ steps.files_list.outputs.files }}
+           -t chunkedhtml ${{ steps.files_list.outputs.files }}
     - uses: actions/upload-artifact@master
       with:
         name: output
