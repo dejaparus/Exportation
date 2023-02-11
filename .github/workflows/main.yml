@@ -1,21 +1,19 @@
-name: CI
+name: Transforming with pandoc
 
 on: [push]
 
 jobs:
-  build:
+  convert_via_pandoc:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Run make4ht 1
-      # uses: michal-h21/make4ht-action@master
-      uses: docker://ghcr.io/michal-h21/make4ht-action:latest
-      env:
-        command: 'make4ht -c config.cfg -ua debug -d out main.tex "fn-in" "pic-tabular" '
-    - name: Publish the web pages
-      uses:  peaceiris/actions-gh-pages@v3
+    - uses: actions/checkout@v2
+    - name: Create HTML directory
+      id: HTML_directory
+    - uses: docker://pandoc/core:2.9
       with:
-        # ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        # PUBLISH_BRANCH: gh-pages
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./out
+        args: >- # allows you to break string into multiple lines
+       --toc  
+       -f latex 
+       -t chunkedhtml  
+       -s --csl apalike.csl 
+       --bibliography=BIBLIOGRAPHY/biblio.bib --citeproc -o SORTIE 
