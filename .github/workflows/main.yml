@@ -1,28 +1,37 @@
-name: Transforming with pandoc
-on: [push]
+name: Advanced Usage
+
+on: push
+
 jobs:
-  starting_pandoc_conversion:
+  convert_via_pandoc:
     runs-on: ubuntu-latest
-	steps:
-	- uses: actions/checkout@v2
-	- name: create output 
-	  id: output_HTML_directory
-	  run: 
-	    mkdir output_HTML_directory  # create final output dir
-	    echo "::set-output name=files::$(printf '"%s" ' *.md)"
-	- uses: docker://pandoc/latex:3.0
-	  with: 
-	    args: >- # allows to break string into multiple lines
-	       --toc  
-	       -f latex 
-	       -s --csl 
-	       --bibliography=BIBLIOGRAPHY/biblio.bib
-	       --metadata title="OUTPUT_HTML_zipped_directory"
-	       -t chunkedhtml output.zip   	
-	- uses: actions/upload-artifact@master	
-	  with:
-	     name: output_HTML_directory
-	     path: output_HTML_directory
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: create output HTML directory
+        id: files_list
+        run: |
+          mkdir output  # create output dir
+          # this will also include README.md
+          echo "::set-output name=files::$(printf '"%s" ' *.md)"
+
+      - uses: docker://pandoc/latex:3.0
+        with:
+          args: >- 
+	    --toc
+	    -f latex
+	    -s --csl
+	    --bibliography=BIBLIOGRAPHY/biblio.bib
+	    --metadata title="HTML_dir"
+	    -t chunkedhtml output.zip
+	    --output=output.zip
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: output
+
+
+
 	
 	
 
