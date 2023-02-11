@@ -19,7 +19,7 @@ jobs:
            -s --csl 
            --bibliography=BIBLIOGRAPHY/biblio.bib
            --metadata title="OUTPUT_HTML_directory"
-           -t chunkedhtml output_HTML_directory
+           -t chunkedhtml 
     - uses: actions/upload-artifact@master
       with:
         name: output_HTML_directory
