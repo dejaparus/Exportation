@@ -1,11 +1,7 @@
 name: Transforming with pandoc
-	
-
 	on: [push]
-	
-
 	jobs:
-    job1:
+    	  job1:
 	    convert_via_pandoc:
 	      runs-on: ubuntu-latest
 	      steps:
