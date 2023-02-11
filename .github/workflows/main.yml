@@ -17,14 +17,7 @@ jobs:
 
       - uses: docker://pandoc/latex:3.0
         with:
-          args: >- 
-	    --toc
-	    -f latex
-	    -s --csl
-	    --bibliography=BIBLIOGRAPHY/biblio.bib
-	    --metadata title="HTML_dir"
-	    -t chunkedhtml output.zip
-	    --output=output.zip
+          args: --toc -s --csl -t latex main.tex --bibliography=BIBLIOGRAPHY/biblio.bib --metadata title="HTML_dir" -t chunkedhtml output.zip --output=output.zip
       - uses: actions/upload-artifact@master
         with:
           name: output
