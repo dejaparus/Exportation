@@ -6,14 +6,11 @@ jobs:
   convert_via_pandoc:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Create HTML directory
-      id: HTML_directory
     - uses: docker://pandoc/core:2.9
       with:
         args: >- # allows you to break string into multiple lines
-       --toc  
-       -f latex 
-       -t chunkedhtml  
-       -s --csl apalike.csl 
-       --bibliography=BIBLIOGRAPHY/biblio.bib --citeproc -o SORTIE 
+           --toc  
+           -f latex 
+           -t chunkedhtml  
+           -s --csl apalike.csl 
+           --bibliography=BIBLIOGRAPHY/biblio.bib --citeproc -o SORTIE 
