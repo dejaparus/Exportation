@@ -22,5 +22,5 @@ jobs:
            -t chunkedhtml ${{ steps.output_HTML_directory.outputs.files }}
     - uses: actions/upload-artifact@master
       with:
-        name: output
-        path: output
+        name: output_HTML_directory
+        path: output_HTML_directory
