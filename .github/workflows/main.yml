@@ -11,7 +11,7 @@ jobs:
       id: output_HTML_directory
       run: |
         mkdir output_HTML_directory  # create final output dir
-        mkdir output_HTML_directory_PROV  # create temporary output dir
+        mkdir output_HTML_directory  # create temporary output dir
     - uses: docker://pandoc/latex:3.0
       with:
         args: >- # allows to break string into multiple lines
@@ -19,13 +19,17 @@ jobs:
            -f latex 
            -s --csl 
            --bibliography=BIBLIOGRAPHY/biblio.bib
-           --metadata title="OUTPUT_HTML_DIRECTORY"
-           -t chunkedhtml output_HTML_directory_PROV
-    - name: copy results in final HTML directory
-      id: copy_results
-      run:
-        cp -f output_HTML_directory_PROV/* ${{ steps.output_HTML_directory.outputs.files }}
+           --metadata title="OUTPUT_HTML_directory"
+           -t chunkedhtml output_HTML_directory
     - uses: actions/upload-artifact@master
       with:
         name: output_HTML_directory
         path: output_HTML_directory
+    - name: Publish the web pages
+      uses:  peaceiris/actions-gh-pages@v3
+      with:
+        # ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        # PUBLISH_BRANCH: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./out
+
