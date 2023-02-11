@@ -2,8 +2,8 @@ name: Transforming with pandoc
 on: [push]
 jobs:
     job1:
-	    convert_via_pandoc:
-	      runs-on: ubuntu-latest
+	convert_via_pandoc:
+		runs-on: ubuntu-latest
 	      steps:
 	      - uses: actions/checkout@v2
 	      - name: create output zipped HTML directory
