@@ -11,7 +11,6 @@ jobs:
       id: output_HTML_directory
       run: |
         mkdir output_HTML_directory  # create final output dir
-        mkdir output_HTML_directory  # create temporary output dir
     - uses: docker://pandoc/latex:3.0
       with:
         args: >- # allows to break string into multiple lines
