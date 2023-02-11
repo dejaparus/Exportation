@@ -13,4 +13,5 @@ jobs:
            -f latex 
            -t chunkedhtml  
            -s --csl apalike.csl 
-           --bibliography=BIBLIOGRAPHY/biblio.bib --citeproc -o SORTIE 
+           --bibliography=BIBLIOGRAPHY/biblio.bib 
+           -o SORTIE 
