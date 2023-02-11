@@ -6,18 +6,22 @@ jobs:
   convert_via_pandoc:
     runs-on: ubuntu-latest
     steps:
-    - uses: docker://pandoc/core:3.0
+    - uses: actions/checkout@v2
+    - name: create output HTML directory
+      id: output_HTML_directory
+      run: |
+        mkdir OUTPUT_HTML_DIR # create output dir
+        # this will also include README.md
+        echo "::set-output name=files::$(printf '"%s" ' *.md)"
+    - uses: docker://pandoc/latex:3.0
       with:
         args: >- # allows you to break string into multiple lines
            --toc  
            -f latex 
            -s --csl apalike.csl 
            --bibliography=BIBLIOGRAPHY/biblio.bib
-           -t OUTPUT_DIR
-    - name: Publish the web pages
-      uses:  peaceiris/actions-gh-pages@v3
-      with:
-        # ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        # PUBLISH_BRANCH: gh-pages
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./out
+           -t --output=OUTPUT_HTML_DIR ${{ steps.files_list.outputs.files }}
+    - uses: actions/upload-artifact@master
+        with:
+          name: OUTPUT_HTML_DIR
+          path: OUTPUT_HTML_DIR
