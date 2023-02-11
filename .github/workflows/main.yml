@@ -10,7 +10,8 @@ jobs:
     - name: create output HTML directory
       id: output_HTML_directory
       run: |
-        mkdir output_HTML_directory >> $GITHUB_OUTPUT # create final output dir
+        mkdir output_HTML_directory  # create final output dir
+        echo "::set-output name=files::$(printf '"%s" ' *.md)"
     - uses: docker://pandoc/latex:3.0
       with:
         args: >- # allows to break string into multiple lines
@@ -19,8 +20,7 @@ jobs:
            -s --csl 
            --bibliography=BIBLIOGRAPHY/biblio.bib
            --metadata title="OUTPUT_HTML_directory"
-           -t chunkedhtml 
-       id: HTML_conversion
+           -t chunkedhtml ${{ steps.output_HTML_directory}}
     - uses: actions/upload-artifact@master
       with:
         name: output_HTML_directory
