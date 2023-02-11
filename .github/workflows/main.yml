@@ -1,5 +1,5 @@
 name: Transforming with pandoc
-	on: [push]
+on: [push]
 	jobs:
     	  job1:
 	    convert_via_pandoc:
