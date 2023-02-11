@@ -20,7 +20,7 @@ jobs:
            -f latex 
            -s --csl apalike.csl 
            --bibliography=BIBLIOGRAPHY/biblio.bib
-           --output=OUTPUT_HTML_DIR ${{ steps.files_list.outputs.files }}
+           -t OUTPUT_HTML_DIR ${{ steps.files_list.outputs.files }}
     - uses: actions/upload-artifact@master
       with:
         name: OUTPUT_HTML_DIR
